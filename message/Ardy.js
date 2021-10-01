@@ -470,7 +470,7 @@ Limit Game : *${cekGLimit(sender, gcount, glimit)}*
 Balance : $${getBalance(sender, balance)}
 • Contact Owner :
 📮 WhatsApp : @${ownerNumber.split("@")[0]}
-💌 Email : lordardy9@gmail.com
+💌 Email : -
 
 ❑ *Information*
 ≻ cekprefix
@@ -1242,7 +1242,7 @@ case 'google':
   if (isLimit(sender, isPremium, isOwner, limitCount, limit)) return reply (`Limit kamu sudah habis silahkan kirim ${prefix}limit untuk mengecek limit`)
   if (args.length < 1) return reply(`Kirim perintah *${prefix + command}* _query_`)
   reply(mess.wait)
-  anu = await fetchJson(`http://api.lolhuman.xyz/api/gsearch?apikey=${lolkey}&query=${q}`, {method: 'get'})
+  anu = await fetchJson(`http://api.lolhuman.xyz/api/gsearch?apikey=7ef1e86bd8624c0edd8bd386&query=${q}`, {method: 'get'})
   teks = `─ 「 *GOOGLE SEARCH* 」 ─\n\n*Hasil Pencarian Dari ${q}*\n\n`
   o = 1
   for (let plor of anu.result) {
@@ -1251,6 +1251,131 @@ case 'google':
   reply(teks.trim())
   limitAdd(sender, limit)
   break
+case 'cecan':
+ case 'uhktyy':
+ if (isLimit(sender, isPrem, isOwner, limitawal, limit)) return reply(mess.limit)
+ try {
+ reply(mess.wait)
+ let wipuu = (await axios.get(`https://raw.githubusercontent.com/MyZuyx/poto/main/${command}.json`)).data
+ let wipii = wipuu[Math.floor(Math.random() * (wipuu.length))]
+ fs.writeFileSync(`./media/ardy/${sender}.jpeg`, 
+ await getBuffer(wipii))
+ const ima = await xinz.prepareMessage(from, fs.readFileSync(`./image/cecan/${sender}.jpeg`),  MessageType.image, {thumbnail: gambar})
+ const butto = [{buttonId:`${prefix+command}`,buttonText: {displayText: '⏩ NEXT ⏪'}, type: 1}]
+ const ButtonsMessagess = {
+ contentText: `Nih ${command} kak`,
+ buttons: butto,
+ footerText: `Klik Next Untuk Melanjutkan Ke Gambar Berikutnya\nBOT Created by Farid`,
+ headerType: 4,
+ imageMessage: ima.message.imageMessage
+ }    
+  await xinz.sendMessage(from, ButtonsMessagess, MessageType.buttonsMessage, {quoted : mek})
+ fs.unlinkSync(`./media/ardy/${sender}.jpeg`)
+ } catch (e) {
+  reply(`${e}`)
+  }
+limitAdd(sender, limit)
+  break
+ case 'inspect':
+if (isLimit(sender, isPrem, isOwner, limitawal, limit)) return reply(mess.limit)
+try {
+let linkRegex = /chat\.whatsapp\.com\/(?:invite\/)?([0-9A-Za-z]{20,24})/i
+let [, code] = q.match(linkRegex) || []
+if (!code) throw 'Link invalid'
+res = await xinz.query({json: ["query", "invite", code],
+expect200: true})
+caption = `── *GROUP LINK INSPECTOR* ──
+
+*Nama Grup : ${res.subject}*
+  - *Terakhir di ubah oleh : @${res.subjectOwner.replace("@c.us","")}*
+  - *Di ubah pada ${formatDate(res.subjectTime * 1000)}*
+
+*ID : ${res.id}*
+*Di Buat Oleh : @${res.id.split('-')[0]}*
+*Di Buat pada ${formatDate(res.creation * 1000)}*
+
+┌•
+│ *Edit info grup : ${res.restrict?`Hanya admin`:`Semua peserta`}*
+│ *Kirim pesan : ${res.announce?`Hanya admin`:`Semua peserta`}*
+│ *Pesan sementara : ${res.ephemeralDuration?`Aktif`:`mati`}*
+│
+│ *Jumlah Member : ${res.size}*
+│ *Member Yang Diketahui :* ${res.participants ? '\n│ *' + res.participants.map((user, i) => ++i + '. @' + user.id.split`@`[0]+'*').join('\n│ *').trim() : ' *Tidak ada'}
+╰•
+
+*Deskripsi :*
+${res.desc ? `${res.desc}` : 'Tidak Ada'}
+
+ - *Terakhir di ubah oleh : @${res.descOwner.replace("@c.us","")}*
+ - *Di ubah pada ${formatDate(res.descTime * 1000)}*`
+//Ambil Case Kasih Credits Gw Dong : FARID MHRDKAA
+try {
+profilePic = await xinz.getProfilePicture(res.id)
+} catch {
+profilePic = `${imagebb}`
+}
+anay = await getBuffer(profilePic)
+xinz.sendMessage(from, anay, image, {quoted: mek, thumbnail: gambar2, caption: caption, contextInfo: {
+mentionedJid: xinz.parseMention(caption)
+}})
+} catch (e) {
+reply(`${e}`)
+}
+limitAdd(sender, limit)
+break
+case 'infocht':{
+ if (!isGroup) return reply('Hanya bisa didalam grup')
+ infom = await client.messageInfo(from, mek.message.extendedTextMessage.contextInfo.stanzaId)
+ hemm = infom.reads
+  hemms = infom.deliveries
+  readon = hemms.map(v => v.jid)
+  readdin = hemm.map(v => v.jid)
+  stamp = hemm.map(v => v.t)
+  function toTime(UNIXtimestamp, ribuan) {
+    ribuan = (typeof ribuan == 'undefined') ? false : true;
+
+    let a = new Date(UNIXtimestamp);
+    if (ribuan) {
+      a = new Date(UNIXtimestamp * 1000);
+    }
+    var hour = a.getHours();
+    var min = a.getMinutes();
+    var sec = a.getSeconds();
+    var time = `${hour}:${min}:${sec}`;
+    return time;
+  }
+
+  function toBulan(UNIXtimestamp, ribuan) {
+    ribuan = (typeof ribuan == 'undefined') ? false : true;
+
+    let a = new Date(UNIXtimestamp);
+    if (ribuan) {
+      a = new Date(UNIXtimestamp * 1000);
+    }
+    var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'Nopember', 'Desember'];
+    var myDays = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jum at', 'Sabtu'];
+    var day = a.getDate()
+    bulanee = a.getMonth()
+    var thisDay = a.getDay(),
+      thisDay = myDays[thisDay];
+    var yy = a.getYear()
+    var year = (yy < 1000) ? yy + 1900 : yy;
+    var bul = `${thisDay}, ${day} - ${months[bulanee]} - ${year}`;
+    return bul;
+  }
+  teksx = `「 *TELAH DIBACA* 」\n\n`
+  for (let i of hemm) {
+    teksx += `${f} Nama : @${i.jid.split('@')[0]}\n${f} Waktu : ${toTime(i.t, true)}\n${f} Tanggal : ${toBulan(i.t, true)}\n\n`
+  }
+  teksx1 = `「 *BELUM DIBACA* 」\n\n`
+  for (let i of hemms) {
+    teksx1 += `${f} Nama : @${i.jid.split('@')[0]}\n`
+    teksx1 += `${f} Waktu : ${toTime(i.t, true)}\n${f} Tanggal : ${toBulan(i.t, true)}\n\n`
+  }
+  xinz.sendMessage(from, teksx, text, { sendEphemeral: false, quoted: mek, thumbnail: gambar3, contextInfo: { forwardingScore: 999, isForwarded: false, mentionedJid: readdin } })
+  xinz.sendMessage(from, teksx1, text, { sendEphemeral: false, quoted: mek, thumbnail: gambar3, contextInfo: { forwardingScore: 999, isForwarded: false, mentionedJid: readon } })
+}
+break
 case 'igtv': 
 case 'tvig': 
 case 'instagramtv':
@@ -1258,18 +1383,63 @@ case 'instagramtv':
 if (args.length < 1) return reply(`LINKNYA MANA?`)
 if (!isUrl) return reply('Linknya?')
 reply(mess.wait)
-anu = await fetchJson(`http://lolhuman.herokuapp.com/api/instagram?apikey=${lolkey}&url=${q}`, {method: 'get'})
+anu = await fetchJson(`http://lolhuman.herokuapp.com/api/instagram?apikey=7ef1e86bd8624c0edd8bd386&url=${q}`, {method: 'get'})
 if (anu.error) return reply(anu.error)
 buffer = await getBuffer(anu.result)
 xinz.sendMessage(from,buffer,video,{mimetype: 'video/mp4', quoted: mek})
 limitAdd(sender, limit)
 break
+case 'xnxxsearch':
+if (isLimit(sender, isPremium, isOwner, limitCount, limit)) return reply (`Limit kamu sudah habis silahkan kirim ${prefix}limit untuk mengecek limit`)
+                    if (!isGroup) return reply(aml.groupo)
+                    if (args.length == 0) return reply(`Contoh: ${prefix + command} Japanese`)
+                    query = args.join('  ')
+                    reply (aml.wait)
+                    get_result = await fetchJson(`http://api.lolhuman.xyz/api/xnxxsearch?apikey=7ef1e86bd8624c0edd8bd386&query=${query}`)
+                    get_result = get_result.result
+                    ini_txt = ""
+                    for (var x of get_result) {
+                    ini_txt += `Title : ${x.title}\n`
+                    ini_txt += `Views : ${x.views}\n`
+                    ini_txt += `Duration : ${x.duration}\n`
+                    ini_txt += `Uploader : ${x.uploader}\n`
+                    ini_txt += `Link : ${x.link}\n`
+                    ini_txt += `Thumbnail : ${x.thumbnail}\n\n`
+                    }
+                    reply(ini_txt)
+                    limitAdd(sender, limit)
+                    break
+           case 'xnxx':
+           if (isLimit(sender, isPremium, isOwner, limitCount, limit)) return reply (`Limit kamu sudah habis silahkan kirim ${prefix}limit untuk mengecek limit`)
+                    if (!isGroup) return reply(aml.groupo)
+                    if (args.length == 0) return reply(`Contoh: ${prefix + command} https://www.xnxx.com/video-uy5a73b/mom_is_horny_-_brooklyn`)
+                    reply (aml.wait)
+                    get_result = await fetchJson(`http://api.lolhuman.xyz/api/xnxx?apikey=7ef1e86bd8624c0edd8bd386&url=${query}`)
+                    get_result = get_result.result
+                    ini_txt = `Title : ${get_result.title}\n`
+                    ini_txt += `Duration : ${get_result.duration}\n`
+                    ini_txt += `View : ${get_result.view}\n`
+                    ini_txt += `Rating : ${get_result.rating}\n`
+                    ini_txt += `Like : ${get_result.like}\n`
+                    ini_txt += `Dislike : ${get_result.dislike}\n`
+                    ini_txt += `Comment : ${get_result.comment}\n`
+                    ini_txt += `Tag : ${get_result.tag.join(", ")}\n`
+                    ini_txt += `Description : ${get_result.description}\n`
+                    ini_txt += "Link : \n"
+                    ini_link = get_result.link
+                    for (var x of ini_link) {
+                        ini_txt += `${x.type} - ${x.link}\n\n`
+                    }
+                    thumbnail = await getBuffer(get_result.thumbnail)
+                    xinz.sendMessage(from, thumbnail, image, { quoted: fkontak, caption: ini_txt })
+                    limitAdd(sender, limit)
+                    break
 case 'distance': 
 case 'jarak':
     if (isLimit(sender, isPremium, isOwner, limitCount, limit)) return reply (`Limit kamu sudah habis silahkan kirim ${prefix}limit untuk mengecek limit`)
     if (args.length < 1) return reply(`Penggunaan ${command} tempat1|tempat2`)
     if (!q.includes("|")) return reply(`Penggunaan ${command} tempat1|tempat2`)
-    fetchJson(`https://api.lolhuman.xyz/api/jaraktempuh?apikey=${lolkey}&kota1=${q.split('|')[0].trim()}&kota2=${q.split('|')[1].trim()}`)
+    fetchJson(`https://api.lolhuman.xyz/api/jaraktempuh?apikey=7ef1e86bd8624c0edd8bd386&kota1=${q.split('|')[0].trim()}&kota2=${q.split('|')[1].trim()}`)
     .then((res) =>{
   let x = res.result
   let ini_txt = `Informasi Jarak dari ${q.split('|')[0].trim()} ke ${q.split('|')[1].trim()} :\n\n`
@@ -2146,6 +2316,84 @@ const buttons = [
                 gameAdd(sender, glimit)
             }
                 break
+case 'mathkuis': 
+case 'math': {
+try {
+  if (isGame(sender, isOwner, gcount, glimit)) return reply(`Limit game kamu sudah habis`)
+  if (game.isMtk(from, mtk)) return reply(`Masih ada soal yang belum di selesaikan`)
+   let buh = await fetchJson(`https://h4ck3rs404-api.herokuapp.com/api/kuis/math?mode=${q}&apikey=404Api`)
+  const petunjuk = buh.result.jawaban.replace(/[b|c|d|f|g|h|j|k|l|m|n|p|q|r|s|t|v|w|x|y|z]/gi, '_')
+  bp = await xinz.sendMessage(from, `*Soal :* ${buh.result.soal} \nWaktu : ${gamewaktu}s`, text, {quoted:mek, thumbnail:gambar2 })
+  let anih = buh.result.jawaban.toLowerCase()
+  game.addmtk(from, anih, gamewaktu, mtk)
+  gameAdd(sender, glimit)
+  setTimeout(() => {
+  xinz.deleteMessage(from, bp.key)
+  }, gamewaktu+`000`)
+  } catch {
+  list = []
+ commandnya = [
+`easy`,
+`medium`,
+`hard`,
+`extreme`,
+`impossible`,
+`pro`
+ ]
+ viewmenunya = [
+`◯ MODE - EASY`,
+`◯ MODE - MEDIUM`,
+`◯ MODE - HARD`,
+`◯ MODE - EXTREME`,
+`◯ MODE - IMPOSSIBLE`,
+`◯ MODE - PRO`
+  ]
+ startnum = 0
+ for (let x of commandnya) {
+ const yy = {title: `──────────────`,
+ rows: [
+ {
+ title: `${viewmenunya[startnum++]}`,
+ description: ``,
+ rowId: `${prefix}math ${x}`
+ }
+ ]
+ }
+ list.push(yy)
+ }
+ listmsg(from, `─ 「 *MATH KUIS* 」 ─`, `SILAHKAN PILIH MODE DI BAWAH INI `, `PILIH MODE DISINI`,`𝙼𝙰𝚃𝙷 𝙺𝚄𝙸𝚂`, list)
+mtk.splice(game.getMtkPosi(from, mtk), 1)
+  }
+    }
+    break
+case 'kalkulator':
+case 'kalku':{
+if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) {
+reply(`${Math_js.evaluate(q.replace("×","*").replace("x","*").replace("X","*").replace("÷","/").replace(":","/").replace("kali","*").replace("bagi","/").replace("tambah","+").replace("tamba","+").replace("kurang","-").replace("kurangi","-"))}`)
+} else {
+reply(`${Math_js.evaluate(mek.message.extendedTextMessage.contextInfo.quotedMessage.conversation)}`)
+}
+}
+break
+case 'notif':
+   if (isLimit(sender, isPremium, isOwner, limitCount, limit)) return reply (`Limit kamu sudah habis silahkan kirim ${prefix}limit untuk mengecek limit`)
+   teks = `NOTIF DARI @${sender.split("@")[0]}\n*PESAN : ${body.slice(7)}*`
+   group = await xinz.groupMetadata(from);
+   member = group['participants']
+   jids = [];
+   member.map(async adm => {
+   jids.push(adm.id.replace('c.us', 's.whatsapp.net'));
+   })
+   options = {
+   text: teks,
+   contextInfo: {
+   mentionedJid: jids
+   },
+   quoted: mek
+   }
+   await xinz.sendMessage(from, options, text)
+   limitAdd(sender, limit)
+   break
 //------------------< Owner >-------------------
             case prefix+'setpp': case prefix+'setppbot':
             case prefix+'setpic': case prefix+'setpicbot':{
