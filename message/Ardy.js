@@ -2437,17 +2437,6 @@ const buttons = [
                 .then((res) => reply(jsonformat(res)))
                 .catch((err) => reply(jsonformat(err)))
                 break
-            case prefix+'tagall':
-                if (!isGroup) return reply(mess.OnlyGrup)
-                if (!isGroupAdmins && !isOwner)return reply(mess.GrupAdmin)
-                let arr = [];
-                let txti = `*[ TAG ALL ]*\n\n${q ? q : ''}\n\n`
-                for (let i of groupMembers){
-                    txti += `=> @${i.jid.split("@")[0]}\n`
-                    arr.push(i.jid)
-                }
-                mentions(txti, arr, true)
-                break
 //------------------< Enable / Disable >-------------------
             case prefix+'antibadword':
                 if (!isGroup) return reply(mess.OnlyGrup)
